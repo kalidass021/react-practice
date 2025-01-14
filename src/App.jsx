@@ -1,6 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-const heading = React.createElement('h1', {}, "Hello, World from react");
+const App = () => {
+    return (
+        <div>App</div>
+    )
+}
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(heading);
+root.render(<App />);
