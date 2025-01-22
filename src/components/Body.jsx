@@ -57,9 +57,7 @@ const Body = () => {
 
               const searchedRestaurants = restaurants.filter((restaurant) => restaurant.info.name.toLowerCase().includes(value));
 
-              setFilteredRestaurants((prev) => {
-                return searchedRestaurants;
-              })
+              setFilteredRestaurants(searchedRestaurants);
             }}
           />
           <button
