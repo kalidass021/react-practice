@@ -58,6 +58,11 @@ const Body = () => {
               const searchedRestaurants = restaurants.filter((restaurant) => restaurant.info.name.toLowerCase().includes(value));
 
               setFilteredRestaurants(searchedRestaurants);
+
+              // regex powered search
+              // const searchTextRegex = new RegExp(value, 'i'); // i flag for case insensitive
+              // const searchedRestaurants = restaurants.filter((restaurant) => searchTextRegex.test(restaurant.info.name))
+              // setFilteredRestaurants(searchedRestaurants);
             }}
           />
           <button
