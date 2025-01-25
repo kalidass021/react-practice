@@ -3,11 +3,14 @@ import RestaurantCard from './RestaurantCard';
 import Shimmer from './Shimmer';
 import { resList } from '../utils/mockData';
 import { Link } from 'react-router';
+import useOnlineStatus from '../utils/useOnlineStatus';
 
 const Body = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const [searchText, setSearchText] = useState('');
+
+  const onlineStatus = useOnlineStatus();
 
   useEffect(() => {
     fetchData();
@@ -39,6 +42,12 @@ const Body = () => {
     );
     setRestaurants(topRatedRestaurants);
   };
+
+  if (!onlineStatus) {
+    return (
+      <h1>Looks like you're offline, please check your internet connection</h1>
+    );
+  }
 
   if (restaurants.length === 0) {
     return <Shimmer />;
