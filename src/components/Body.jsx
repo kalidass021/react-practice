@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import RestaurantCard from './RestaurantCard';
+import RestaurantCard, { withExpressLabel } from './RestaurantCard';
 import Shimmer from './Shimmer';
 import { resList } from '../utils/mockData';
 import { Link } from 'react-router';
@@ -11,6 +11,7 @@ const Body = () => {
   const [searchText, setSearchText] = useState('');
 
   const onlineStatus = useOnlineStatus();
+  const RestaurantCardExpress = withExpressLabel(RestaurantCard);
 
   useEffect(() => {
     fetchData();
@@ -55,11 +56,11 @@ const Body = () => {
   return (
     <div className='body'>
       {console.log('body rendered')}
-      <div className='filter'>
-        <div className='search'>
+      <div className='flex'>
+        <div className='m-4 p-4'>
           <input
             type='text'
-            className='search-box'
+            className='border border-solid border-black'
             value={searchText}
             onChange={(e) => {
               const { value } = e.target;
@@ -78,6 +79,7 @@ const Body = () => {
             }}
           />
           <button
+            className='mx-2 px-4 py-2 bg-green-300 rounded-xl cursor-pointer'
             onClick={() => {
               // const searchedRestaurants = restaurants.filter(
               //   (restaurant) =>
@@ -89,17 +91,26 @@ const Body = () => {
             Search
           </button>
         </div>
-        <button className='filter-btn' onClick={handleClick}>
-          Top Rated
-        </button>
+        <div className='flex items-center py-2'>
+          <button
+            className='px-4 py-2 bg-green-100 m-4 rounded-lg'
+            onClick={handleClick}
+          >
+            Top Rated
+          </button>
+        </div>
       </div>
-      <div className='res-container'>
+      <div className='flex flex-wrap'>
         {filteredRestaurants.map((restaurant) => (
           <Link
             to={`/restaurants/${restaurant.info.id}`}
             key={restaurant.info.id}
           >
-            <RestaurantCard resData={restaurant} />
+            {restaurant.info.sla.deliveryTime < 15 ? (
+              <RestaurantCardExpress resData={restaurant} />
+            ) : (
+              <RestaurantCard resData={restaurant} />
+            )}
           </Link>
         ))}
       </div>
