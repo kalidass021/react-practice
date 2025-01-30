@@ -1,4 +1,4 @@
-import {lazy, Suspense} from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import Header from './components/Header';
 import Body from './components/Body';
@@ -11,17 +11,28 @@ const LazyGrocery = lazy(() => import('./components/Grocery'));
 // error page
 import Error from './components/Error';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router';
-
+import UserContext from './utils/UserContext';
 
 const App = () => {
+  const [userName, setUserName] = useState();
+
+  // authentication
+  useEffect(() => {
+    // make an api call sent username and password and get data
+    const data = {
+      username: 'Kalidass',
+    };
+    setUserName(data.username);
+  }, []);
   return (
     <div className='app'>
-      <Header />
-      <Outlet />
+      <UserContext.Provider value={{loggedInUser: userName, setUserName}}>
+        <Header />
+        <Outlet />
+      </UserContext.Provider>
     </div>
   );
 };
-
 
 const appRouter = createBrowserRouter([
   {
@@ -42,7 +53,7 @@ const appRouter = createBrowserRouter([
       },
       {
         path: '/restaurants/:resId',
-        element: <RestaurantMenu />
+        element: <RestaurantMenu />,
       },
       {
         path: '/grocery',
@@ -50,10 +61,10 @@ const appRouter = createBrowserRouter([
           <Suspense fallback={<h1>Loading...</h1>}>
             <LazyGrocery />
           </Suspense>
-        )
+        ),
       },
     ],
-    errorElement: <Error />
+    errorElement: <Error />,
   },
 ]);
 

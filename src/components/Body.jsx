@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import RestaurantCard, { withExpressLabel } from './RestaurantCard';
 import Shimmer from './Shimmer';
 import { resList } from '../utils/mockData';
 import { Link } from 'react-router';
 import useOnlineStatus from '../utils/useOnlineStatus';
+import UserContext from '../utils/UserContext';
 
 const Body = () => {
   const [restaurants, setRestaurants] = useState([]);
@@ -12,6 +13,8 @@ const Body = () => {
 
   const onlineStatus = useOnlineStatus();
   const RestaurantCardExpress = withExpressLabel(RestaurantCard);
+
+  const { loggedInUser, setUserName } = useContext(UserContext);
 
   useEffect(() => {
     fetchData();
@@ -98,6 +101,15 @@ const Body = () => {
           >
             Top Rated
           </button>
+        </div>
+        <div className='flex items-center py-2'>
+          <label>Username</label>
+          <input
+            type='text'
+            className='border border-black'
+            value={loggedInUser}
+            onChange={(e) => setUserName(e.target.value)}
+          />
         </div>
       </div>
       <div className='flex flex-wrap'>

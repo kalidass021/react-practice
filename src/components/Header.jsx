@@ -1,9 +1,13 @@
+import { useContext } from 'react';
+import UserContext from '../utils/UserContext';
 import { LOGO_URL } from '../utils/constants';
 import { useState } from 'react';
 import { Link } from 'react-router';
 
 const Header = () => {
   const [btnName, setBtnName] = useState('login');
+  const {loggedInUser} = useContext(UserContext);
+  console.log({loggedInUser});
   return (
     <div className='flex justify-between bg-pink-200 sm:bg-yellow-200 lg:bg-green-200 shadow-lg border border-solid border-black'>
     {console.log('header rendered')}
@@ -28,6 +32,7 @@ const Header = () => {
           <button className='login' onClick={() => {
             btnName === 'login' ? setBtnName('logout') : setBtnName('login');
           }}>{btnName}</button>
+          <li className='mx-2 font-bold'>{loggedInUser}</li>
         </ul>
       </div>
     </div>
