@@ -17,7 +17,8 @@ const cartSlice = createSlice({
       );
     },
     clearCart: (state, action) => {
-      state.items = [];
+      // state = [] // wont' work
+      state.items = []; // will work
     },
   },
 });
